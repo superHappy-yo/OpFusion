@@ -24,3 +24,9 @@
 同 iid 替换仍核对数值、资源和时延；所有编译/测量成本计入预算；不将仅输出 Y 的程序替换要求 T1/Y 的接口。
 
 当前没有测试/启动命令。第一次实现时记录真实环境、命令与结果，不能把这里的验收目标写成已通过事实。
+
+## 生成接口与探索入口
+
+TuningRequest 的 oracle 必需、seed_candidate 可选；apps 可以对尚无已选实现的保留区域发起生成。ProgramSpec 与 BackendCompileRequest 见 contracts/program-inputs.md。
+
+目标相关规则由 extensions 提供。首版实现贡献为完整匹配区域生成方案，或分解为已有算子；不假设任意单算子 lowering 能拼接融合。TVM 张量程序路线优先 PoC，Triton 作为 GPU 选项；选择依据与限制见 docs/architecture/technology.md。

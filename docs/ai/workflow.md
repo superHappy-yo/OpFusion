@@ -60,3 +60,9 @@
 交付至少说明：修改内容、涉及路径、验证结果、未完成事项和必要的契约后续工作。说明预测、模拟、单设备实测和分布式实测各自的证据边界。
 
 可用 [review-task.md](review-task.md) 做独立复核。未来的强制检查规格见 [enforcement.md](enforcement.md)；文档存在不代表这些机制已经启用。
+
+## 6. 普通扩展任务
+
+新增算子、设备型号、编译器或实现规则使用 [extension-task.md](extension-task.md)，先读 extensions/AGENTS.md。默认仅可写一个明确的 extensions/<kind>/<plugin_id>/，不将整个 extensions 视为可写模块。目标包可通过同一 manifest 提供相关多种贡献；新增已有算子的目标实现可独立放在 implementations 包。
+
+所有位置的 AGENTS/CLAUDE、公共契约、核心模块、发现器、根依赖和兄弟扩展默认只读。发现器首次实现属于集成任务；之后接入既有契约内的插件无需修改核心注册列表。缺少工具链只影响依赖它的贡献，不能伪造执行能力。

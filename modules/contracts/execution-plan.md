@@ -1,6 +1,6 @@
 # 部署环境与执行计划契约
 
-状态：0.1.0 草案，未实现。planner 产生计划，runtime 执行已验证计划；runtime 不在执行中静默改变区域划分或设备放置。
+状态：0.2.0 草案，未实现。planner 产生计划，runtime 执行已验证计划；runtime 不在执行中静默改变区域划分或设备放置。
 
 ## DeploymentContext
 

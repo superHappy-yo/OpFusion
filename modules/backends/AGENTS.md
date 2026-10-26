@@ -24,3 +24,11 @@
 - 先写明输入输出、失败语义和最小可验证行为；优先简单实现，不引入尚无使用场景的策略/基类。
 - 重点验证：支持条件与真实后端一致；包含 shape/dtype/layout/数值模式；失败不冒充不支持；产物版本和设备匹配；编译与原始时间记录可追溯。
 - 完成前对照任务 allowlist 检查全部 diff、未跟踪文件及重命名两端；报告真实验证，不虚构硬件执行或测试通过。
+
+## 扩展与技术选型规则
+
+先读 modules/contracts/extensions.md、program-inputs.md 和 docs/architecture/technology.md。
+
+- 本模块保留通用能力、目录、编译/执行路由；具体算子/设备/编译器适配默认放 extensions 的独立包，不再为每个新设备在核心增分支。
+- 按注入提供者的 ID、版本、目标和 ABI 路由，禁止把编译器与设备强制一一绑定；设备型号描述不能冒充真实实例探测。
+- CompilePort 消费 BackendCompileRequest；MeasurePort 由 runtime 统一管理生命周期，本模块提供设备计时/同步原语，不另建无身份测量执行器。

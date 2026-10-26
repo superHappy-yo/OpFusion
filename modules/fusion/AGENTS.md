@@ -24,3 +24,11 @@
 - 先写明输入输出、失败语义和最小可验证行为；优先简单实现，不引入尚无使用场景的策略/基类。
 - 重点验证：完整覆盖且互斥、商图无环、外部输出保留、参考候选；pending 不伪装 verified；同候选池/预算测试保留策略。
 - 完成前对照任务 allowlist 检查全部 diff、未跟踪文件及重命名两端；报告真实验证，不虚构硬件执行或测试通过。
+
+## 扩展与技术选型规则
+
+先读 modules/contracts/extensions.md、program-inputs.md 和 docs/architecture/technology.md。
+
+- 通过 OperatorSemanticPort 的条件 traits 和实现查询判断合法区域，不因新算子名增加特殊分支；未知属性保留边界，不能当作任意可融合。
+- 可保留合法但暂无实现的探索区域/接口供 apps 请求 codegen；与可供生产规划的 verified 候选分开。
+- 一个单算子有实现不证明整个融合区域有实现；检查全部边界输出和精确语义/接口。

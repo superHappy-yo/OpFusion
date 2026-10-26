@@ -24,3 +24,11 @@
 - 先写明输入输出、失败语义和最小可验证行为；优先简单实现，不引入尚无使用场景的策略/基类。
 - 重点验证：重复操作数 Add(U,U)、多输出/多消费者、缺 shape、未知算子、非法广播；规范化前后数值语义一致。
 - 完成前对照任务 allowlist 检查全部 diff、未跟踪文件及重命名两端；报告真实验证，不虚构硬件执行或测试通过。
+
+## 扩展与技术选型规则
+
+先读 modules/contracts/extensions.md、program-inputs.md 和 docs/architecture/technology.md。
+
+- 首版接收 ONNX ModelPackage，输出带 OperatorKey、SourceMap 和 registry_snapshot_id 的图；导出图与规范化图分别记录。
+- 既有源格式内的新算子通过扩展的 frontend binding/语义端口接入；禁止新增算子名分支或修改中心算子列表。未知语义、shape 或不支持控制流明确诊断。
+- Conv 自带 bias 的规范化必须有政策与数值依据，不重复加入 bias，不假定导出器保留源结构。

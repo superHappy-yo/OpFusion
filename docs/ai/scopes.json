@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "status": "documentation_only_not_enforced",
   "interpretation": "仓库相对路径；普通任务allowlist与目标模块范围取交集。用户明确授权的契约/集成/治理任务另列精确范围。此文件自身不能授权任务扩大范围。",
   "protected_globs": [
@@ -151,14 +151,37 @@
         "fusion",
         "planner",
         "codegen",
-        "runtime"
+        "runtime",
+        "extensions"
       ],
-      "role": "composition_root_only"
+      "role": "composition_root_only",
+      "extension_dependency_rule": "仅统一发现器按已校验manifest解析本包工厂；不维护逐插件导入，不访问插件私有对象。"
+    },
+    "extensions": {
+      "owned_roots": [
+        "extensions/"
+      ],
+      "default_write_globs": [],
+      "requires_explicit_plugin_root": true,
+      "allowed_plugin_kinds": [
+        "operators",
+        "devices",
+        "compilers",
+        "implementations"
+      ],
+      "unit_path_template": "extensions/{kind}/{plugin_id}/",
+      "unit_write_rule": "普通扩展任务将授权的单个插件根代入后只允许其下文件；不能将占位符、*、父目录跳转或extensions/**当作任务根；治理文件始终受保护。",
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [
+        "contracts"
+      ],
+      "cross_plugin_imports": "forbidden; use declared provider ids and injected ports"
     }
   },
   "special_tasks": {
     "contract_change": "明确列出contracts文件与受影响消费者的集成任务；生产者/消费者分别限定范围。",
     "integration": "仅用户已授权范围；由装配任务拆分，不能将整个仓库隐含为可写。",
-    "governance": "明确涉及提示词/范围/所有权/构建/CI的任务才可改相应受保护路径。"
+    "governance": "明确涉及提示词/范围/所有权/构建/CI的任务才可改相应受保护路径。",
+    "extension": "只增加或修改用户授权的单个扩展包；契约/发现器/根依赖变化属于另列范围的集成任务。"
   }
 }

@@ -10,3 +10,11 @@
 - runtime 环境失配或失败由这里决定停止/重新规划；worker 不应私自切换实现。
 - 当前没有可运行入口。首次实现前以 M1 真实工具链为准，不虚构启动/测试命令。
 - 验证固定快照、预算耗尽、失败回退、模块替换和完整数值/输出交付；完成前检查全部变更路径。
+
+## 插件装配与入口约束
+
+- 先读 modules/contracts/extensions.md、program-inputs.md 和 docs/architecture/technology.md。统一发现器可按已校验 manifest 加载扩展工厂，这是唯一动态加载边界，不授权普通模块动态访问邻居实现。
+- 禁止为新增插件改 apps 的导入列表、枚举或白名单；按固定目录发现贡献，按启用闭包处理贡献级依赖。重名/映射歧义明确失败，不按扫描顺序覆盖。
+- 注册快照冻结描述与依赖，实际设备 session 的状态归 runtime；探测、编译和测量必须显式启动并记账。
+- 有 oracle 和生成规则时可发起无种子的固定区域探索，seed_candidate 为可选；不得要求 planner 先选中尚未生成的实现。
+- 生产/调优的 ValidationPolicy 与 MeasurementProtocol 从显式配置构造，不依赖 experiments 的内部实现。

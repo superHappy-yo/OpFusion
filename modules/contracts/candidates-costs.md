@@ -1,6 +1,6 @@
 # 区域候选、接口与成本契约
 
-状态：0.1.0 草案，未实现。定义研究一输出和研究三反馈共享的记录；预测器、候选搜索和具体程序生成不在 contracts 实现。
+状态：0.2.0 草案，未实现。定义研究一输出和研究三反馈共享的记录；预测器、候选搜索和具体程序生成不在 contracts 实现。
 
 ## 区域与完整划分
 
@@ -24,7 +24,7 @@ Conv 示例中，R123={v1,v2,v3} 的输入为 X、W、b，输出为 Y。如果�
 
 ## ImplementationSpec、CandidateSpec 与验证状态
 
-`ImplementationSpec` 包含 `implementation_id`、`backend_id`、后端/编译器版本、算法及内核结构摘要、编译选项、制品引用和已知实现特征。分块、物化和线程结构可以未知，但不能编造。制品缺失的探索实现不能交付运行。
+`ImplementationSpec` 包含 `implementation_id`、`backend_id`、`registry_snapshot_id`、精确提供者 ID/版本/内容摘要、后端/编译器版本、ProgramSpec 引用（生成程序适用）、算法及内核结构摘要、编译选项、制品引用和已知实现特征。分块、物化和线程结构可以未知，但不能编造。制品缺失的探索实现不能交付运行。
 
 `CandidateSpec` 通过 `candidate_id` 唯一关联 `region_id`、`interface_id`、`device_id`、`profile_id`、`implementation_id`、执行配置和证据。选择一个候选即选择完整记录，不允许从不同候选拼出设备、时延和工作区。
 
@@ -42,7 +42,7 @@ Conv 示例中，R123={v1,v2,v3} 的输入为 X、W、b，输出为 Y。如果�
 
 ## MeasurementRecord：原始观测的唯一记录
 
-此对象由实际测量适配器或 runtime 产生，cost_model 只读取；experiments 定义评价协议并分析记录，不回写原始样本。
+此对象由 runtime 的受控测量服务结合后端原始观测产生，cost_model 只读取；experiments 构造评价政策并分析记录，不回写原始样本。生产/调优政策由 apps 提供，不依赖 experiments；MeasurementProtocol 的唯一定义见 program-inputs.md。
 
 | 字段 | 含义 |
 |---|---|
@@ -79,7 +79,7 @@ Conv 示例中，R123={v1,v2,v3} 的输入为 X、W、b，输出为 Y。如果�
 
 ## CandidateSnapshot
 
-`CandidateSnapshot` 包含 `schema_version`、`snapshot_id`、`graph_id`、`profile_id`、完整划分列表、区域/接口/候选/成本/证据引用、适配器目录及兼容关系引用。所有引用都应能解析，且属于同一冻结条件。
+`CandidateSnapshot` 包含 `schema_version`、`snapshot_id`、`registry_snapshot_id`、`graph_id`、`profile_id`、完整划分列表、区域/接口/候选/成本/证据引用、适配器目录及兼容关系引用。所有引用都应能解析，且属于同一冻结条件。
 
 候选可执行性、局部资源通过，不代表完整划分已全局可行。planner 还需联合选择候选及适配器，并检查部署环境。pending 探索候选与可运行候选分开列出。
 
@@ -87,7 +87,9 @@ Conv 示例中，R123={v1,v2,v3} 的输入为 X、W、b，输出为 Y。如果�
 
 ## TuningRequest 与 TuningResult
 
-请求包含 `request_id`、`snapshot_id`、`region_id`、`device_id`、`profile_id`、`interface_id`、参考 `candidate_id`、`workspace_budget_bytes_by_pool`、搜索/编译/测量预算和执行条件。
+请求包含 `request_id`、`snapshot_id`、`registry_snapshot_id`、`region_id`、`device_id`、`profile_id`、`interface_id`、必需 `oracle_ref`/`validation_policy_id`、可选 `seed_candidate_id`、`workspace_budget_bytes_by_pool`、搜索/编译/测量预算和执行条件。oracle 的身份和限制按 program-inputs.md 定义；不能用尚未验证的新实现自证正确。
+
+snapshot_id 所指快照可包含仅有区域/接口的探索项，不要求该区域已有 verified 候选。已有实现优化和无种子区域探索使用同一固定接口契约；apps 可以从 fusion 保留的探索区域发起请求，不必先被 planner 选中。若单算子均有可执行参考，允许构造逐算子组合参考，但必须验证边界与资源，不能称为已经单内核融合。缺少可用 oracle 或生成规则时返回明确未满足条件，不伪造种子。
 
 codegen 只能在固定语义、设备和接口内优化程序结构。成功结果返回新实现/候选、制品、成本和证据，以及实际消耗预算；失败结果返回原因和预算，允许状态为未找到。接口改变必须形成新接口候选，不能冒充同接口替换。
 

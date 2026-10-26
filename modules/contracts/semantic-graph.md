@@ -1,12 +1,13 @@
 # 语义图契约
 
-状态：0.1.0 草案，未实现。语义图描述需要计算什么，不包含设备放置、内核启动、物理缓冲或传输指令。
+状态：0.2.0 草案，未实现。语义图描述需要计算什么，不包含设备放置、内核启动、物理缓冲或传输指令。
 
 ## GraphSpec
 
 | 字段 | 含义 |
 |---|---|
 | schema_version、graph_id | 契约版本及不可变语义图标识 |
+| registry_snapshot_id、source_map_ref | 解析算子语义所用的扩展快照；源模型与规范化节点/端口的对应记录 |
 | nodes | 算子节点表，每个节点只代表一次逻辑运算 |
 | tensors | 逻辑张量表；一个值只登记一次 |
 | model_input_ids | 模型运行时输入；不包含固定参数 |
@@ -19,7 +20,7 @@
 
 | 字段 | 含义 |
 |---|---|
-| node_id、op | 唯一节点标识及运算类型 |
+| node_id、op_key | 唯一节点标识及 OperatorKey=(namespace,name,semantic_version)，定义见 extensions.md |
 | attributes | 影响语义的参数，如卷积步长、padding、groups、归约轴 |
 | input_tensor_ids | 按输入端口排列的有序列表，允许重复引用同一张量 |
 | output_tensor_ids | 按输出端口排列的有序列表 |
@@ -27,6 +28,8 @@
 | numeric_override | 必需的局部数值约定；不得无依据放宽全图数值政策 |
 
 输入输出 shape、dtype 从张量表读取。运算量、扇入扇出等可以缓存为派生特征，但必须能追溯到上述语义，不成为另一份事实来源。实际寄存器、流量、工作区和时延不写成算子的固有常数。
+
+算子身份、属性校验、shape 推导和有条件 traits 通过 [扩展契约](extensions.md) 查询，核心不维护新增算子名的 switch。图中实例化的 index_semantics 必须引用相应语义版本并符合实际属性/形状；未知项不推断成逐元素或任意可融合。ONNX domain/opset 属于来源映射，不能直接替代规范化 OperatorKey 的语义版本。
 
 ## TensorSpec 与端口边
 

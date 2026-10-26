@@ -16,8 +16,9 @@
 | `modules/planner` | 自身代码、contracts 公开 API |
 | `modules/codegen` | 自身代码、contracts 公开 API |
 | `modules/runtime` | 自身代码、contracts 公开 API |
-| `apps` | 上述模块的公开 API，用于装配具体实现 |
+| `apps` | 上述模块公开 API；仅统一插件加载器可按已校验 manifest 解析扩展工厂 |
 | `modules/experiments` | 自身代码、contracts 公开 API、apps 提供的公开实验运行入口 |
+| `extensions/<kind>/<plugin_id>` | 自身代码、contracts 公开 API；可声明第三方依赖，不导入核心模块、apps 或兄弟扩展实现 |
 
 模块可使用经过声明的外部依赖，但不得借外部包或动态导入绕过本表。contracts 不引入 NumPy、PyTorch、CUDA、RPC、数据库客户端等重依赖，也不执行探测、加载模型或连接网络等副作用。
 
@@ -32,6 +33,8 @@ flowchart TB
     apps --> contracts["contracts：DTO 与 ports"]
     implementation_modules --> contracts
     experiments --> contracts
+    apps --> extensions["extensions：经 manifest 加载的贡献"]
+    extensions --> contracts
 ```
 
 图中的模块组是依赖规则的汇总节点，不表示应实现一个包含所有模块的大类。
@@ -52,6 +55,8 @@ flowchart TB
 - backends 导入 frontend 的模型对象并跳过规范化语义图。
 - contracts 暴露某个框架的 Tensor、CUDA stream 或数据库连接作为跨模块 DTO。
 - 通过字符串模块路径、`importlib`、全局 Service Locator 或环境变量读取另一个模块内部对象。
+
+唯一动态加载边界是 apps 中统一的插件加载器：依据 [扩展契约](../../modules/contracts/extensions.md) 读取已校验 manifest，解析该包声明的工厂。它不能成为任意模块导入邻居内部实现的通道。核心模块仅接收窄接口，不导入 extensions；apps 不按每个插件写导入列表。该加载器尚未实现。
 
 端口协议由 contracts 拥有，具体类由实现模块拥有。协议需要更改时，必须作为明确的契约变更处理；不能在使用方建立一份不兼容的同名协议。
 
@@ -77,7 +82,8 @@ flowchart TB
 | apps 的装配、入口和任务流程 | 仅明确包含 apps 的任务可修改 |
 | 根提示词、模块提示词、架构规则 | 治理文件；普通实现任务不能修改规则来扩大自身范围 |
 | 共享实验配置和跨模块集成用例 | 明确的实验/集成任务所有，不由任意业务模块任务改写 |
-| backend 的设备专属子目录 | 设备子任务默认只修改该设备范围；公共后端协议属于 contracts |
+| `extensions/<kind>/<plugin_id>/` | 普通扩展任务只修改已授权单包；所有提示词及治理规则仍只读 |
+| backends 的通用编译/执行机制 | 属于核心 backends 任务；新增具体设备/编译器默认进入 extensions，不复制通用机制 |
 
 文件路径的最终允许范围以当前任务声明和上级提示词为准。用户明确授权的跨模块任务可以同时修改多个范围；不能把本规则解释成必须重复请求已经取得的授权。
 

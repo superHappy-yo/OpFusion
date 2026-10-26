@@ -1,6 +1,8 @@
 # contracts：公共数据与端口契约
 
-状态：`schema_version = 0.1.0` 的设计草案。当前只有规范，没有 DTO、序列化器、RPC、验证器或可调用 API 实现。首次实现须将本规范转化为明确类型和契约测试，不得把文档示例当作已运行结果。
+状态：`schema_version = 0.2.0` 的设计草案。当前只有规范，没有 DTO、序列化器、RPC、验证器或可调用 API 实现。首次实现须将本规范转化为明确类型和契约测试，不得把文档示例当作已运行结果。
+
+0.2.0 将算子标识升级为 OperatorKey，并增加扩展快照和入口/编译请求。0.1.0 仅为历史文档，无现有生产数据；未来读取旧示例应明确拒绝或显式映射，不静默猜测算子语义版本。
 
 本模块只拥有跨模块共享的数据含义、约束、错误语义及端口定义。不能依赖其他业务模块、设备驱动、深度学习框架、网络库或数据库。`frontend`、`backends`、`cost_model`、`fusion`、`planner`、`codegen`、`runtime` 依赖这里的公开契约，由 `apps` 注入具体实现；不能为方便调用而反向导入它们。
 
@@ -13,6 +15,8 @@
 | [execution-plan.md](execution-plan.md) | 部署环境、适配器、执行计划、物理缓冲 | planner → runtime |
 | [worker-protocol.md](worker-protocol.md) | 制品引用、控制消息、任务状态、重试、事件归属和 ExecutionReport | runtime 协调端 ↔ 工作端 |
 | [backend-ports.md](backend-ports.md) | 硬件描述、能力查询和编译、运行、测量、预测、存储端口 | backends/runtime/cost_model 实现，apps 装配 |
+| [extensions.md](extensions.md) | 插件 manifest、算子/设备贡献、注册与支持判定 | extensions 提供，apps 发现，核心通过端口使用 |
+| [program-inputs.md](program-inputs.md) | 模型/优化/运行入口、程序方案、编译请求及验证/测量政策 | frontend/apps/codegen/backends/runtime |
 
 公共字段发生改变时，修改此处唯一规范；其他模块只能引用，不能复制一份“兼容结构”后自行演进。普通模块任务可在本模块之外的自身 `proposals/` 提出需求，但不能顺便修改公共契约。跨模块变更流程见 [AI 工作流](../../docs/ai/workflow.md)。
 

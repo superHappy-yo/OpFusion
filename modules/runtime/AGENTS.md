@@ -24,3 +24,12 @@
 - 先写明输入输出、失败语义和最小可验证行为；优先简单实现，不引入尚无使用场景的策略/基类。
 - 重点验证：重复提交、状态迁移、过期事件、取消、断连、worker 故障、资源释放、产物 digest/版本不匹配；控制消息与张量数据分离。
 - 完成前对照任务 allowlist 检查全部 diff、未跟踪文件及重命名两端；报告真实验证，不虚构硬件执行或测试通过。
+
+## 扩展与技术选型规则
+
+先读 modules/contracts/extensions.md、program-inputs.md 和 docs/architecture/technology.md。
+
+- 设备行为由注入的 ExecutorProvider 提供，不在核心按新设备名写分支或动态导入插件；apps 负责发现和装配。
+- MeasurePort 复用这里的执行身份、缓冲、同步和取消生命周期；本地测量也受同样规则约束，政策由 contracts 定义。
+- 加载计划时校验精确插件/提供者/产物身份与环境，不把 discovered 或 supported 当作 verified。
+- Python 控制逻辑不逐元素执行计算；主机提交/复制开销独立测量，有证据后再把热点迁移到原生实现。

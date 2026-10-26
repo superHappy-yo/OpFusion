@@ -24,3 +24,12 @@
 - 先写明输入输出、失败语义和最小可验证行为；优先简单实现，不引入尚无使用场景的策略/基类。
 - 重点验证：同 iid 替换仍核对数值、资源和时延；所有编译/测量成本计入预算；不将仅输出 Y 的程序替换要求 T1/Y 的接口。
 - 完成前对照任务 allowlist 检查全部 diff、未跟踪文件及重命名两端；报告真实验证，不虚构硬件执行或测试通过。
+
+## 扩展与技术选型规则
+
+先读 modules/contracts/extensions.md、program-inputs.md 和 docs/architecture/technology.md。
+
+- 搜索器使用固定区域与接口、必需语义 oracle 和可选 seed_candidate；支持生成初始实现，不依赖 planner 已选中该区域。
+- 通过公开生成/编译贡献得到 ProgramSpec。首版只承诺完整区域程序或合法分解，不通过兄弟插件私有 IR builder 拼接片段。
+- 新算子/目标的方案由 extensions 提供，核心不增加名称分支。TVM 路线优先 PoC、Triton 为 GPU 选项；不将未验证的选型写成已实现。
+- 每次生成、编译、自动调优和测量均受显式预算控制，不把搜索藏进后端的默认调用。

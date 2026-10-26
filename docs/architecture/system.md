@@ -28,6 +28,8 @@ OpFusion 面向异构分布式推理，将图级融合、异构映射调度和�
 
 `apps/` 解析任务与配置，实例化并注入各模块，管理总预算、版本快照及接纳/回退流程。它可以调用模块公开 API，但不能复制模块内部算法。所有算法模块对外交换 contracts 定义的对象，不直接导入其他算法模块的具体实现。
 
+新增算子/设备通过 `extensions/` 提交独立贡献，核心九模块保持不变。apps 统一发现 manifest 并冻结 registry；backends 组织通用编译和设备操作路由，具体编译器/设备适配器在扩展内。输入、语言和工具链选择见 [技术决策](technology.md)，字段以 [扩展契约](../../modules/contracts/extensions.md) 为准。单设备支持、算子识别和融合实现可用分别验证。
+
 下列是逻辑调用关系，不是模块之间的源码导入关系：
 
 ```mermaid
@@ -40,12 +42,15 @@ flowchart LR
     fusion --> planner["planner<br/>执行计划 P"]
     planner --> runtime["runtime<br/>执行与观测"]
     planner --> codegen["codegen<br/>固定接口优化"]
+    fusion -. "保留区域的探索请求，经 apps" .-> codegen
     codegen --> next_snapshot["apps<br/>验证后发布下一快照"]
     runtime --> next_snapshot
     next_snapshot --> fusion
 ```
 
 反馈箭头表示新一轮数据更新。单轮执行仍读取固定快照，不能形成边规划边改变成本的隐式循环。
+
+planner→codegen 表示 apps 可用计划选择优化对象，不是 codegen 的唯一入口。尚无种子实现的区域也可以在有语义参考和生成规则时探索，避免要求“必须先是可执行候选才能生成首个实现”。
 
 ## 3. 两个运行角色
 
