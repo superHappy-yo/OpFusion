@@ -1,0 +1,8 @@
+# Current repository maintainer. No fictitious module teams.
+# Review ownership is not a filesystem boundary or an enabled branch rule.
+* @superHappy-yo
+/AGENTS.md @superHappy-yo
+/CLAUDE.md @superHappy-yo
+/docs/ai/ @superHappy-yo
+/modules/contracts/ @superHappy-yo
+/.github/ @superHappy-yo

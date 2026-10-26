@@ -1,0 +1,164 @@
+{
+  "schema_version": "0.1.0",
+  "status": "documentation_only_not_enforced",
+  "interpretation": "仓库相对路径；普通任务allowlist与目标模块范围取交集。用户明确授权的契约/集成/治理任务另列精确范围。此文件自身不能授权任务扩大范围。",
+  "protected_globs": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "**/AGENTS.md",
+    "**/CLAUDE.md",
+    "docs/ai/**",
+    "docs/architecture/**",
+    ".github/**",
+    "modules/contracts/**",
+    "pyproject.toml",
+    "uv.lock",
+    "requirements*.txt",
+    "CMakeLists.txt",
+    "Dockerfile*",
+    "deploy/**"
+  ],
+  "scopes": {
+    "contracts": {
+      "owned_roots": [
+        "modules/contracts/"
+      ],
+      "default_write_globs": [
+        "modules/contracts/**"
+      ],
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [],
+      "contract_edit_requires_contract_task": true
+    },
+    "frontend": {
+      "owned_roots": [
+        "modules/frontend/"
+      ],
+      "default_write_globs": [
+        "modules/frontend/**"
+      ],
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [
+        "contracts"
+      ],
+      "contract_edit_requires_contract_task": false
+    },
+    "backends": {
+      "owned_roots": [
+        "modules/backends/"
+      ],
+      "default_write_globs": [
+        "modules/backends/**"
+      ],
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [
+        "contracts"
+      ],
+      "contract_edit_requires_contract_task": false
+    },
+    "cost_model": {
+      "owned_roots": [
+        "modules/cost_model/"
+      ],
+      "default_write_globs": [
+        "modules/cost_model/**"
+      ],
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [
+        "contracts"
+      ],
+      "contract_edit_requires_contract_task": false
+    },
+    "fusion": {
+      "owned_roots": [
+        "modules/fusion/"
+      ],
+      "default_write_globs": [
+        "modules/fusion/**"
+      ],
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [
+        "contracts"
+      ],
+      "contract_edit_requires_contract_task": false
+    },
+    "planner": {
+      "owned_roots": [
+        "modules/planner/"
+      ],
+      "default_write_globs": [
+        "modules/planner/**"
+      ],
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [
+        "contracts"
+      ],
+      "contract_edit_requires_contract_task": false
+    },
+    "codegen": {
+      "owned_roots": [
+        "modules/codegen/"
+      ],
+      "default_write_globs": [
+        "modules/codegen/**"
+      ],
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [
+        "contracts"
+      ],
+      "contract_edit_requires_contract_task": false
+    },
+    "runtime": {
+      "owned_roots": [
+        "modules/runtime/"
+      ],
+      "default_write_globs": [
+        "modules/runtime/**"
+      ],
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [
+        "contracts"
+      ],
+      "contract_edit_requires_contract_task": false
+    },
+    "experiments": {
+      "owned_roots": [
+        "modules/experiments/"
+      ],
+      "default_write_globs": [
+        "modules/experiments/**"
+      ],
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [
+        "contracts",
+        "apps"
+      ],
+      "contract_edit_requires_contract_task": false
+    },
+    "apps": {
+      "owned_roots": [
+        "apps/"
+      ],
+      "default_write_globs": [
+        "apps/**"
+      ],
+      "always_protected_instruction_files": true,
+      "allowed_business_dependencies": [
+        "contracts",
+        "frontend",
+        "backends",
+        "cost_model",
+        "fusion",
+        "planner",
+        "codegen",
+        "runtime"
+      ],
+      "role": "composition_root_only"
+    }
+  },
+  "special_tasks": {
+    "contract_change": "明确列出contracts文件与受影响消费者的集成任务；生产者/消费者分别限定范围。",
+    "integration": "仅用户已授权范围；由装配任务拆分，不能将整个仓库隐含为可写。",
+    "governance": "明确涉及提示词/范围/所有权/构建/CI的任务才可改相应受保护路径。"
+  }
+}

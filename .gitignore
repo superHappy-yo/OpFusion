@@ -1,0 +1,35 @@
+# Local editors and agent-specific configuration
+.DS_Store
+.idea/
+.vscode/
+.claude/settings.local.json
+.claude/worktrees/
+CLAUDE.local.md
+.env
+.env.*
+!.env.example
+
+# Future local runtimes and native build output
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+node_modules/
+
+# Raw observations and compiled/model artifacts are stored by reference
+/artifacts/
+/runs/
+/data/
+/logs/
+*.onnx
+*.pt
+*.pth
+*.safetensors
+*.cubin
+*.so
+*.dylib
