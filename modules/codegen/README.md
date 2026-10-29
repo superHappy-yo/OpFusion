@@ -29,4 +29,4 @@
 
 TuningRequest 的 oracle 必需、seed_candidate 可选；apps 可以对尚无已选实现的保留区域发起生成。ProgramSpec 与 BackendCompileRequest 见 contracts/program-inputs.md。
 
-目标相关规则由 extensions 提供。首版实现贡献为完整匹配区域生成方案，或分解为已有算子；不假设任意单算子 lowering 能拼接融合。TVM 张量程序路线优先 PoC，Triton 作为 GPU 选项；选择依据与限制见 docs/architecture/technology.md。
+目标相关规则由 extensions 提供。首版实现贡献为完整匹配区域生成方案，或分解为已有算子；不假设任意单算子 lowering 能拼接融合。生成后端需先完成 C++ 集成 PoC；依赖 Python 的 TVM/Triton 路径只可用于测试对照，不能默认进入生产代码生成；选择依据与限制见 docs/architecture/technology.md。

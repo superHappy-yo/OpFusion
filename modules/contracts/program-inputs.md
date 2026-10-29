@@ -51,7 +51,7 @@ BackendCompileRequest 包含 request_id、program_id/方案引用、profile_id�
 | ValidationPolicy | policy_id/version、oracle_ref、输入域/测试用例引用、比较方法和数值容差、特殊值政策、接口/资源检查、证据用途 |
 | MeasurementProtocol | protocol_id/version、计时边界/单位/时钟域、热身和重复、同步、驻留、线程/并发、缓存处理、失败样本政策、测量预算和 data_role |
 
-oracle_ref 指向固定版本的语义参考提供者或已验证参考程序；与需要优化的 seed_candidate_id 不同。参考路径的实现、测试覆盖与限制必须可追溯，不能用新实现自身的输出作为唯一正确性依据。测试通过只说明声明范围内通过。
+oracle_ref 指向固定版本的语义参考提供者或已验证参考程序；与需要优化的 seed_candidate_id 不同。参考路径的实现、测试覆盖与限制必须可追溯，不能用新实现自身的输出作为唯一正确性依据。测试通过只说明声明范围内通过。生产与调优流程中的参考提供者必须通过 C++ 可用的端口执行；Python 独立参考只用于测试，不能因这里需要 oracle 就被引入生产调用链。
 
 apps 提供生产/调优任务的明确政策；experiments 可以构造独立评价政策，但生产模块不依赖 experiments。runtime 的受控执行服务实现 MeasurePort，复用正式执行的 run/task/attempt、缓冲、取消和同步生命周期；backends/扩展只提供设备操作与计时原语。单机测量可以使用本地 runtime，不要求启动远程服务。
 
