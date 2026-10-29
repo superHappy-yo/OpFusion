@@ -1,0 +1,648 @@
+{
+  "compute_data_type": "float",
+  "intermediate_data_type": "float",
+  "io_data_type": "float",
+  "is_override_shape_enabled": false,
+  "min_required_engine_api_version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "name": "yolo11-sppf_fp32_nhwc",
+  "nodes": [
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 2,
+        "x_tensor_uid": 1
+      },
+      "name": "Conv_109",
+      "outputs": {
+        "y_tensor_uid": 3
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 3,
+        "in_1_tensor_uid": 4,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "Conv_109/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 5,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 5,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "sigmoid_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "Sigmoid_110",
+      "outputs": {
+        "out_0_tensor_uid": 6,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 5,
+        "in_1_tensor_uid": 6,
+        "in_2_tensor_uid": null,
+        "operation": "mul",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "Mul_111",
+      "outputs": {
+        "out_0_tensor_uid": 7,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "generate_index": false,
+      "name": "MaxPool_112",
+      "padding_mode": "neg_inf_pad",
+      "post_padding": [
+        2,
+        2
+      ],
+      "pre_padding": [
+        2,
+        2
+      ],
+      "resample_mode": "maxpool",
+      "stride": [
+        1,
+        1
+      ],
+      "type": "ResampleFwdAttributes",
+      "window": [
+        5,
+        5
+      ],
+      "x_tensor_uid": 7,
+      "y_tensor_uid": 8
+    },
+    {
+      "compute_data_type": "float",
+      "generate_index": false,
+      "name": "MaxPool_113",
+      "padding_mode": "neg_inf_pad",
+      "post_padding": [
+        2,
+        2
+      ],
+      "pre_padding": [
+        2,
+        2
+      ],
+      "resample_mode": "maxpool",
+      "stride": [
+        1,
+        1
+      ],
+      "type": "ResampleFwdAttributes",
+      "window": [
+        5,
+        5
+      ],
+      "x_tensor_uid": 8,
+      "y_tensor_uid": 9
+    },
+    {
+      "compute_data_type": "float",
+      "generate_index": false,
+      "name": "MaxPool_114",
+      "padding_mode": "neg_inf_pad",
+      "post_padding": [
+        2,
+        2
+      ],
+      "pre_padding": [
+        2,
+        2
+      ],
+      "resample_mode": "maxpool",
+      "stride": [
+        1,
+        1
+      ],
+      "type": "ResampleFwdAttributes",
+      "window": [
+        5,
+        5
+      ],
+      "x_tensor_uid": 9,
+      "y_tensor_uid": 10
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "x_tensor_uids": [
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      "name": "Concat_115",
+      "outputs": {
+        "y_tensor_uid": 11
+      },
+      "parameters": {
+        "axis": 1,
+        "in_place_index": null
+      },
+      "type": "ConcatenateAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 12,
+        "x_tensor_uid": 11
+      },
+      "name": "Conv_116",
+      "outputs": {
+        "y_tensor_uid": 13
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 13,
+        "in_1_tensor_uid": 14,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "Conv_116/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 15,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 15,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "sigmoid_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "Sigmoid_117",
+      "outputs": {
+        "out_0_tensor_uid": 16,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 15,
+        "in_1_tensor_uid": 16,
+        "in_2_tensor_uid": null,
+        "operation": "mul",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "Mul_118",
+      "outputs": {
+        "out_0_tensor_uid": 17,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    }
+  ],
+  "tensors": [
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        256,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "288",
+      "strides": [
+        102400,
+        1,
+        5120,
+        256
+      ],
+      "uid": 1,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        128,
+        256,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "model.9.cv1.conv.weight",
+      "strides": [
+        256,
+        1,
+        256,
+        256
+      ],
+      "uid": 2,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "289::before_bias",
+      "strides": [
+        51200,
+        1,
+        2560,
+        128
+      ],
+      "uid": 3,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "289",
+      "strides": [
+        51200,
+        1,
+        2560,
+        128
+      ],
+      "uid": 5,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "model.9.cv1.conv.bias",
+      "strides": [
+        128,
+        1,
+        128,
+        128
+      ],
+      "uid": 4,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "290",
+      "strides": [
+        51200,
+        1,
+        2560,
+        128
+      ],
+      "uid": 6,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "291",
+      "strides": [
+        51200,
+        1,
+        2560,
+        128
+      ],
+      "uid": 7,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "292",
+      "strides": [
+        51200,
+        1,
+        2560,
+        128
+      ],
+      "uid": 8,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "293",
+      "strides": [
+        51200,
+        1,
+        2560,
+        128
+      ],
+      "uid": 9,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "294",
+      "strides": [
+        51200,
+        1,
+        2560,
+        128
+      ],
+      "uid": 10,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "295",
+      "strides": [
+        204800,
+        1,
+        10240,
+        512
+      ],
+      "uid": 11,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        256,
+        512,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "model.9.cv2.conv.weight",
+      "strides": [
+        512,
+        1,
+        512,
+        512
+      ],
+      "uid": 12,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        256,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "296::before_bias",
+      "strides": [
+        102400,
+        1,
+        5120,
+        256
+      ],
+      "uid": 13,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        256,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "296",
+      "strides": [
+        102400,
+        1,
+        5120,
+        256
+      ],
+      "uid": 15,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        256,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "model.9.cv2.conv.bias",
+      "strides": [
+        256,
+        1,
+        256,
+        256
+      ],
+      "uid": 14,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        256,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "297",
+      "strides": [
+        102400,
+        1,
+        5120,
+        256
+      ],
+      "uid": 16,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        256,
+        20,
+        20
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "298",
+      "strides": [
+        102400,
+        1,
+        5120,
+        256
+      ],
+      "uid": 17,
+      "virtual": false
+    }
+  ]
+}

@@ -20,7 +20,7 @@
 
 | 字段 | 含义 |
 |---|---|
-| node_id、op_key | 唯一节点标识及 OperatorKey=(namespace,name,semantic_version)，定义见 extensions.md |
+| node_id、op_key | 唯一节点标识及 OperatorKey=(namespace,name)，定义见 extensions.md |
 | attributes | 影响语义的参数，如卷积步长、padding、groups、归约轴 |
 | input_tensor_ids | 按输入端口排列的有序列表，允许重复引用同一张量 |
 | output_tensor_ids | 按输出端口排列的有序列表 |
@@ -51,7 +51,7 @@
 
 ## Conv–BiasAdd–ReLU 规范例子
 
-本例 Conv2D 不含 bias。所有张量为 FP32，Conv 采用 FP32 累加。Conv 参数：kernel 3×3、stride 1、四边 padding 1、dilation 1、groups 1。
+本例 Conv 不含 bias。所有张量为 FP32，Conv 采用 FP32 累加。Conv 参数：spatial_dimensions=2、kernel 3×3、stride 1、四边 padding 1、dilation 1、groups 1。
 
 | 值 | shape / 逻辑轴 | 来源或使用 |
 |---|---|---|
@@ -63,7 +63,7 @@
 | Y | [1,32,32,32] / NCHW | v3 输出 0；模型输出 |
 
 ```text
-v1: Conv2D(X,W) -> T1
+v1: Conv(X,W) -> T1
 v2: BiasAdd(T1,b,channel_axis=1) -> T2
 v3: ReLU(T2) -> Y
 

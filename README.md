@@ -1,59 +1,75 @@
 # OpFusion
 
-面向异构设备的图级融合、分布式映射调度与设备内程序优化研究系统。
+一个 C++17 研究系统，按职责分目录。当前实现逻辑值图、算子语义、静态模型导入、部署声明校验和建模 CLI；尚无设备执行器、性能代价模型、融合搜索或计划生成器。
 
-当前状态：**文档与 AI 协作骨架**。已定义模块边界、数据契约、运行角色、任务模板和验收要求；尚无业务实现、可执行入口、自动测试或 CI 门禁。所有标为 API、策略或协议的内容目前均为实现规格。
+正式模型入口为 **静态 ONNX，标准 domain、opset 17**；八个 benchmark JSON 保留为兼容测试入口。原图只含逻辑算子、张量值和生产/消费端口；设备、实现、物理表示与运行时缓冲分开。
 
-## 从哪里开始
+公共契约 **6.1.0**、operator API **5.0.0**。算子身份只有命名空间和名称，不再含数学语义版本。`Conv`、`MaxPool` 用 `spatial_dimensions=1/2/3` 表达维数，不保留旧二维类型别名。CLI inspection schema 为 `/4`、operators schema 保持 `/2`，插件 manifest schema 为 `2.0.0`；旧插件必须迁移并重新编译。
 
-1. AI 先读 [AGENTS.md](AGENTS.md)，再读目标目录的 `AGENTS.md` 和 `README.md`。`CLAUDE.md` 只引用同级规则，避免维护两套指令。
-2. 人先读 [系统架构](docs/architecture/system.md)、[依赖规则](docs/architecture/dependency-rules.md) 和 [设计决策](docs/architecture/decisions.md)。
-3. 实现前选用 [单模块任务](docs/ai/module-task.md) 或 [集成任务](docs/ai/integration-task.md)，列明允许修改路径和验收条件。
-4. 按 [实施路线](docs/roadmap/implementation.md) 从最小可验证链路推进；不要直接开始全平台、全算子的系统实现。
-5. 新增算子/设备先读 [扩展入口](extensions/README.md)、[扩展契约](modules/contracts/extensions.md) 和 [扩展任务模板](docs/ai/extension-task.md)。默认只增加一个扩展包，不修改核心模块。
+## 编译与运行
 
-本次完成的检查与限制见 [初始化核查记录](docs/verification/bootstrap.md)。
+需要 CMake 3.20+、C++17 编译器；开启测试目标时还需 Python 3。直接执行：
 
-## 模块地图
-
-| 目录 | 职责 | 研究对应 |
-|---|---|---|
-| [contracts](modules/contracts/README.md) | 图、张量、设备、候选、代价、计划和协议的公共契约 | 公共基础 |
-| [frontend](modules/frontend/README.md) | 模型导入、语义规范化、端口和张量关联 | 输入基础 |
-| [backends](modules/backends/README.md) | 设备能力、默认实现、编译/运行/转换原语 | 硬件适配 |
-| [cost_model](modules/cost_model/README.md) | 条件特征、代价预测、校准和不确定性 | 研究一 |
-| [fusion](modules/fusion/README.md) | 合法区域、完整划分、候选保留 | 研究一 |
-| [planner](modules/planner/README.md) | 划分选择、设备映射、事件与缓冲计划 | 研究二 |
-| [codegen](modules/codegen/README.md) | 固定区域/设备/接口下的内部程序搜索 | 研究三 |
-| [runtime](modules/runtime/README.md) | Coordinator/Worker、执行事件、传输与产物生命周期 | 执行基础 |
-| [experiments](modules/experiments/README.md) | 基线、测量协议、数据划分、正确性与效果评估 | 证据基础 |
-| [apps](apps/README.md) | 唯一装配层：选择具体组件、预算、快照和反馈流程 | 集成 |
-
-这是模块化单仓。Coordinator 与 Worker 是部署角色，不要求把每个研究模块做成网络服务。算法模块只通过公共数据和端口协作，由 `apps` 注入实现。
-
-`extensions/` 是算子、设备、编译器和实现规则的扩展所有权区，不新增研究模块。约定由 apps 启动发现包内 manifest，再通过小接口、组合和不可变 registry 注入现有模块；不依赖深继承或核心中的算子/设备名称分支。当前仅完成机制规格，尚无插件加载器。
-
-## 首个贯穿示例
-
-```text
-v1: Conv2D(X,W) -> T1
-v2: BiasAdd(T1,b) -> T2
-v3: ReLU(T2) -> Y
-
-v1 --T1--> v2 --T2--> v3
+```bash
+./compile.sh
+./run.sh model.onnx
+./run.sh --context scenario.json model.onnx
+./run.sh models/
+./run.sh benchmark/yolo/*.json
 ```
 
-Conv 不含 bias；X 为 `[1,16,32,32]`，W 为 `[32,16,3,3]`，b 为 `[32]`，偏置沿通道轴广播；stride=1、padding=1、dilation=1、groups=1，全 FP32。原始图只有三个算子节点和两条端口依赖边。融合区域输入 X/W/b，输出 Y；存在外部消费者时须保留相应中间输出。
+`compile.sh` 在 `build/` 配置 Release 并编译，产物为 `build/apps/opfusion`，不自动运行测试。首次构建从官方来源准备锁版 Protobuf 31.1 和 Abseil 20250127.0，校验 SHA-256，并从 ONNX 1.20.0 官方 schema 生成 C++ 解析代码；下载失败返回非零，不安装系统包。下载、生成物、模型和权重仅放构建缓存。后续复用缓存，依赖及许可证见 [third_party](third_party/README.md)。
 
-## 当前工程选择
+`run.sh` 接受单文件、多个文件、shell 展开的通配符或目录；目录递归扫描 `.onnx` 和兼容图 `.json`，路径排序，排除本次 `--context` 指定文件。路径含空格时加引号。逐文件 JSONL 写标准输出，进度、错误和汇总写标准错误；单文件失败后继续，任一失败则最终非零退出。
 
-- C++ 实现领域对象、研究算法、应用编排和运行时；Python 仅用于测试驱动、测试数据与独立参考校验，不承担生产算法、插件或编译/调优控制流程。
-- 第一模型入口为 ONNX 模型包，连同 shape/数值/预算要求和部署上下文进入内部 GraphSpec；后续通过 frontend 扩展支持 torch.export、StableHLO。
-- 研究三先验证满足 C++ 集成边界的生成后端；TVM、MLIR/IREE 等仍需具体版本与接口 PoC。依赖 Python 的 Triton 路线仅作测试对照，不能默认进入生产链路；当前未安装或验证任何工具链。
-- 采用端口与适配器、显式依赖注入、可替换策略、不可变版本快照和运行时状态机。
-- RPC 库、部署工具和具体编译后端在相应里程碑前通过 ADR 确定；当前不添加占位依赖或虚假的启动命令。
-- 不将图上融合直接等同于单内核或性能收益；不将预测、模拟和实机观测混用。
+```bash
+./run.sh benchmark > build/benchmark-results.jsonl
+ctest --test-dir build -C Release --output-on-failure
+```
 
-模块提示词规定默认修改边界，但不是文件系统沙箱。[边界强制机制规格](docs/ai/enforcement.md) 区分了提示词、未来 CI 检查与系统权限；当前未启用后两者。仓库未添加许可证，许可证选择另行决定。
+脚本可从其他工作目录以绝对路径调用。输入相对调用者工作目录；`OPFUSION_BUILD_DIR` 指定构建目录，`CMAKE_BUILD_PARALLEL_LEVEL` 指定编译并行数（默认 4）。
 
-本轮选型理由、模块修订与接入边界见 [输入、后端与语言选择](docs/architecture/technology.md)；检查结果见 [扩展设计核查](docs/verification/extensions.md)。
+## 输出含义
+
+每份结果包含显式模型接口（ONNX）、逻辑张量/类型/轴、节点、端口边、已验证属性、数值要求及来源映射。`supports_broadcasting` 是算子能力，`broadcasting.applied/inputs` 是本实例的实际广播端口和输出轴。同形状 Mul 的 `applied` 为 false。
+
+ONNX 来源保留 IR/opset、生产工具和模型摘要；initializer 依据声明标为 Parameter，记录内容摘要和 external-data 范围，运行时输入标为 Input。带 bias 的 Conv 规范化为无 bias Conv、Reshape、Add，每个规范节点保留原节点位置及输入/输出名称。静态形状值由 C++ 计算，保留规范化说明，不记为融合收益。
+
+`logical_axes` 为每个维度提供 `[lower, upper)` 坐标范围、生产者访问表达式及输入来源。`axis_model` 绑定图、生产节点和索引分段；`modeling.axis_models` 汇总结构模型状态。Reshape 可记录轴拆分、合并或一般重索引，Shape 记录元数据读取，常量记录生成关系，标量显式没有轴。YOLO11n 的 715 个张量均已完成结构轴建模。
+
+轴的 `semantic` 是可选命名注释；ONNX 没有声明且无法安全推导时为 null。例如 `[1,256,20,20] → [1,2,128,400]` 可确定通道拆成 `2×128`、空间合并成 `400`，不能据此擅自命名 AttentionHead。`modeling.named_axis_annotations` 单独统计这些可选注释（YOLO11n 有 61 个张量未指定命名）。旧的 `axes_origin` 字段由上述明确分层替代。
+
+`compute_type`、累加类型和误差要求只展示来源声明，未知为 null。`index_semantics` 展示域、地址表达式、读取阶段及归约类型；`modeling.index_relations` 汇总已知/未知数量。当前 22 类内置算子均提供完整的访问关系；Gather 的间接读取附带必须保留的值域检查。形状校验通过不代表设备可执行或融合已合法。context 只提供部署声明，具体计时事件待未来 Plan 绑定；成本保持 null，不虚构 CPU 回退、运行时间或硬件证据。
+
+## 完整模型验收
+
+固定：ResNet50 FP32 `[1,3,224,224]` → `[1,1000]`；YOLO11n FP32 `[1,3,640,640]`、80 类、无 NMS → `[1,84,8400]`，均为静态 opset 17。Python 仅准备测试模型与独立参考，生产导入不调用 Python。
+
+准备独立测试环境，再导出缓存模型：
+
+```bash
+python3 -m venv --system-site-packages build/onnx-test-env
+build/onnx-test-env/bin/python -m pip install -r modules/frontend/tests/requirements.txt
+build/onnx-test-env/bin/python modules/frontend/tests/PrepareModels.py --cache build/model-cache
+./compile.sh
+ctest --test-dir build --output-on-failure
+```
+
+锁版工具为 PyTorch 2.5.1、torchvision 0.20.1、Ultralytics 8.3.0、ONNX 1.20.0；无系统图形库的测试环境使用 OpenCV headless。`PrepareModels.py` 记录导出选项、模型和权重 SHA-256。`FullModelAcceptance` 必须找到两个模型及来源清单，否则失败，不以跳过代替验收。可用 CMake `opfusionModelTestPython` 指向已有测试环境。
+
+完整模型测试对照独立 ONNX Runtime 的所有原始节点输出签名、initializer 及规范化映射；不把参考运行时的运行当作本系统设备执行。其余回归覆盖 ND Conv/MaxPool 的形状、分组、非对称填充、步长、dilation、ceil、数值索引及非法输入，ONNX 外部参数/来源/接口、context 和脚本。八图结构仍合计 264 节点、415 张量、301 条边，SPPF 为 12/17/16。
+
+当前结构轴修复见 [结构轴建模验证](docs/verification/structural-axis-modeling.md)；索引完善记录见 [完整索引建模](docs/verification/complete-index-modeling.md)；此前入口迁移记录见 [ONNX 建模迁移验证](docs/verification/onnx-modeling.md)。
+
+## 代码入口
+
+| 路径 | 职责 |
+|---|---|
+| [contracts](modules/contracts/README.md) | 纯领域图、算子、表示、设备、代价记录和计划不变量 |
+| [frontend](modules/frontend/README.md) | ONNX/兼容 JSON 来源、静态推导和规范化 |
+| [apps](apps/README.md) | 唯一装配层、CLI、部署 context 与可选插件 |
+| cost_model / fusion / planner / codegen | 后续算法职责；尚无相应生产实现 |
+| backends / runtime | 后续设备执行职责；尚无相应生产实现 |
+| experiments | 实验职责，生产目录不得反向依赖 |
+
+开始修改前阅读 [AGENTS.md](AGENTS.md)、[C++ 规范](docs/cpp-coding-standard.md) 及目标目录规则。历史规格和旧验证记录不代表当前实现能力。仓库治理提示词、所有权策略及原始 benchmark 不在本次修改范围。

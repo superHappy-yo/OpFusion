@@ -1,0 +1,32 @@
+{
+  "name": "neutral-nhwc-named-fixture",
+  "compute_data_type": "float",
+  "intermediate_data_type": "float",
+  "io_data_type": "float",
+  "is_override_shape_enabled": false,
+  "min_required_engine_api_version": {"major": 1, "minor": 0, "patch": 0},
+  "nodes": [
+    {
+      "name": "first",
+      "type": "FixtureRoute",
+      "compute_data_type": "float",
+      "inputs": {"operation": "PROJECT", "tensors": [700]},
+      "outputs": {"tensors": [42]},
+      "extra_metadata": {"flag": true, "nested": [null, "opaque", [], {}]}
+    },
+    {
+      "name": "second",
+      "type": "FixtureRoute",
+      "compute_data_type": "float",
+      "inputs": {"operation": "PROJECT", "tensors": [42, 42, null]},
+      "outputs": {"tensors": [170, 990, null]}
+    }
+  ],
+  "tensors": [
+    {"uid": 99, "name": "unused", "dims": [1, 3, 5, 7], "strides": [105, 1, 21, 3], "data_type": "float", "alignment": 16, "virtual": false, "is_runtime_pass_by_value": false},
+    {"uid": 700, "name": "external", "dims": [1, 3, 5, 7], "strides": [105, 1, 21, 3], "data_type": "float", "alignment": 16, "virtual": false, "is_runtime_pass_by_value": false},
+    {"uid": 42, "name": "middle", "dims": [1, 3, 5, 7], "strides": [105, 1, 21, 3], "data_type": "float", "alignment": 16, "virtual": true, "is_runtime_pass_by_value": false},
+    {"uid": 170, "name": "terminal-a", "dims": [1, 3, 5, 7], "strides": [105, 1, 21, 3], "data_type": "float", "alignment": 16, "virtual": false, "is_runtime_pass_by_value": false},
+    {"uid": 990, "name": "terminal-b", "dims": [1, 3, 5, 7], "strides": [105, 1, 21, 3], "data_type": "float", "alignment": 16, "virtual": false, "is_runtime_pass_by_value": false}
+  ]
+}

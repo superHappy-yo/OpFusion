@@ -1,0 +1,2437 @@
+{
+  "compute_data_type": "float",
+  "intermediate_data_type": "float",
+  "io_data_type": "float",
+  "is_override_shape_enabled": false,
+  "min_required_engine_api_version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "name": "resnet50_layer2_fp32_nchw",
+  "nodes": [
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 2,
+        "x_tensor_uid": 1
+      },
+      "name": "/layer2/0/conv1/Conv",
+      "outputs": {
+        "y_tensor_uid": 3
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 12,
+        "x_tensor_uid": 1
+      },
+      "name": "/layer2/0/downsample/0/Conv",
+      "outputs": {
+        "y_tensor_uid": 13
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          2,
+          2
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 3,
+        "in_1_tensor_uid": 4,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/0/conv1/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 5,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 13,
+        "in_1_tensor_uid": 14,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/0/downsample/0/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 15,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 5,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/0/relu/Relu",
+      "outputs": {
+        "out_0_tensor_uid": 6,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 7,
+        "x_tensor_uid": 6
+      },
+      "name": "/layer2/0/conv2/Conv",
+      "outputs": {
+        "y_tensor_uid": 8
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          1,
+          1
+        ],
+        "pre_padding": [
+          1,
+          1
+        ],
+        "stride": [
+          2,
+          2
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 8,
+        "in_1_tensor_uid": 9,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/0/conv2/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 10,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 10,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/0/Relu",
+      "outputs": {
+        "out_0_tensor_uid": 11,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 16,
+        "x_tensor_uid": 11
+      },
+      "name": "/layer2/0/conv3/Conv",
+      "outputs": {
+        "y_tensor_uid": 17
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 17,
+        "in_1_tensor_uid": 18,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/0/conv3/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 19,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 19,
+        "in_1_tensor_uid": 15,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/0/Add",
+      "outputs": {
+        "out_0_tensor_uid": 20,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 20,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/0/Relu_1",
+      "outputs": {
+        "out_0_tensor_uid": 21,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 22,
+        "x_tensor_uid": 21
+      },
+      "name": "/layer2/1/conv1/Conv",
+      "outputs": {
+        "y_tensor_uid": 23
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 23,
+        "in_1_tensor_uid": 24,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/1/conv1/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 25,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 25,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/1/relu/Relu",
+      "outputs": {
+        "out_0_tensor_uid": 26,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 27,
+        "x_tensor_uid": 26
+      },
+      "name": "/layer2/1/conv2/Conv",
+      "outputs": {
+        "y_tensor_uid": 28
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          1,
+          1
+        ],
+        "pre_padding": [
+          1,
+          1
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 28,
+        "in_1_tensor_uid": 29,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/1/conv2/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 30,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 30,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/1/Relu",
+      "outputs": {
+        "out_0_tensor_uid": 31,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 32,
+        "x_tensor_uid": 31
+      },
+      "name": "/layer2/1/conv3/Conv",
+      "outputs": {
+        "y_tensor_uid": 33
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 33,
+        "in_1_tensor_uid": 34,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/1/conv3/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 35,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 35,
+        "in_1_tensor_uid": 21,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/1/Add",
+      "outputs": {
+        "out_0_tensor_uid": 36,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 36,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/1/Relu_1",
+      "outputs": {
+        "out_0_tensor_uid": 37,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 38,
+        "x_tensor_uid": 37
+      },
+      "name": "/layer2/2/conv1/Conv",
+      "outputs": {
+        "y_tensor_uid": 39
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 39,
+        "in_1_tensor_uid": 40,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/2/conv1/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 41,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 41,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/2/relu/Relu",
+      "outputs": {
+        "out_0_tensor_uid": 42,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 43,
+        "x_tensor_uid": 42
+      },
+      "name": "/layer2/2/conv2/Conv",
+      "outputs": {
+        "y_tensor_uid": 44
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          1,
+          1
+        ],
+        "pre_padding": [
+          1,
+          1
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 44,
+        "in_1_tensor_uid": 45,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/2/conv2/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 46,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 46,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/2/Relu",
+      "outputs": {
+        "out_0_tensor_uid": 47,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 48,
+        "x_tensor_uid": 47
+      },
+      "name": "/layer2/2/conv3/Conv",
+      "outputs": {
+        "y_tensor_uid": 49
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 49,
+        "in_1_tensor_uid": 50,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/2/conv3/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 51,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 51,
+        "in_1_tensor_uid": 37,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/2/Add",
+      "outputs": {
+        "out_0_tensor_uid": 52,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 52,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/2/Relu_1",
+      "outputs": {
+        "out_0_tensor_uid": 53,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 54,
+        "x_tensor_uid": 53
+      },
+      "name": "/layer2/3/conv1/Conv",
+      "outputs": {
+        "y_tensor_uid": 55
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 55,
+        "in_1_tensor_uid": 56,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/3/conv1/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 57,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 57,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/3/relu/Relu",
+      "outputs": {
+        "out_0_tensor_uid": 58,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 59,
+        "x_tensor_uid": 58
+      },
+      "name": "/layer2/3/conv2/Conv",
+      "outputs": {
+        "y_tensor_uid": 60
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          1,
+          1
+        ],
+        "pre_padding": [
+          1,
+          1
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 60,
+        "in_1_tensor_uid": 61,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/3/conv2/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 62,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 62,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/3/Relu",
+      "outputs": {
+        "out_0_tensor_uid": 63,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "w_tensor_uid": 64,
+        "x_tensor_uid": 63
+      },
+      "name": "/layer2/3/conv3/Conv",
+      "outputs": {
+        "y_tensor_uid": 65
+      },
+      "parameters": {
+        "conv_mode": "CROSS_CORRELATION",
+        "dilation": [
+          1,
+          1
+        ],
+        "post_padding": [
+          0,
+          0
+        ],
+        "pre_padding": [
+          0,
+          0
+        ],
+        "stride": [
+          1,
+          1
+        ]
+      },
+      "type": "ConvolutionFwdAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 65,
+        "in_1_tensor_uid": 66,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/3/conv3/Conv/bias_add",
+      "outputs": {
+        "out_0_tensor_uid": 67,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 67,
+        "in_1_tensor_uid": 53,
+        "in_2_tensor_uid": null,
+        "operation": "add",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/3/Add",
+      "outputs": {
+        "out_0_tensor_uid": 68,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    },
+    {
+      "compute_data_type": "float",
+      "inputs": {
+        "axis_tensor_uid": null,
+        "elu_alpha": null,
+        "in_0_tensor_uid": 68,
+        "in_1_tensor_uid": null,
+        "in_2_tensor_uid": null,
+        "operation": "relu_fwd",
+        "relu_lower_clip": null,
+        "relu_lower_clip_slope": null,
+        "relu_upper_clip": null,
+        "softplus_beta": null,
+        "swish_beta": null
+      },
+      "name": "/layer2/3/Relu_1",
+      "outputs": {
+        "out_0_tensor_uid": 69,
+        "out_1_tensor_uid": null
+      },
+      "type": "PointwiseAttributes"
+    }
+  ],
+  "tensors": [
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        256,
+        56,
+        56
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer1/2/Relu_1_output_0",
+      "strides": [
+        802816,
+        3136,
+        56,
+        1
+      ],
+      "uid": 1,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        128,
+        256,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_477",
+      "strides": [
+        256,
+        1,
+        1,
+        1
+      ],
+      "uid": 2,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        56,
+        56
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/conv1/Conv_output_0::before_bias",
+      "strides": [
+        401408,
+        3136,
+        56,
+        1
+      ],
+      "uid": 3,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        512,
+        256,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_486",
+      "strides": [
+        256,
+        1,
+        1,
+        1
+      ],
+      "uid": 12,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/downsample/0/Conv_output_0::before_bias",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 13,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        56,
+        56
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/conv1/Conv_output_0",
+      "strides": [
+        401408,
+        3136,
+        56,
+        1
+      ],
+      "uid": 5,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_478",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 4,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/downsample/0/Conv_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 15,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_487",
+      "strides": [
+        512,
+        1,
+        1,
+        1
+      ],
+      "uid": 14,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        56,
+        56
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/relu/Relu_output_0",
+      "strides": [
+        401408,
+        3136,
+        56,
+        1
+      ],
+      "uid": 6,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        128,
+        128,
+        3,
+        3
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_480",
+      "strides": [
+        1152,
+        9,
+        3,
+        1
+      ],
+      "uid": 7,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/conv2/Conv_output_0::before_bias",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 8,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/conv2/Conv_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 10,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_481",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 9,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/Relu_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 11,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        512,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_483",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 16,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/conv3/Conv_output_0::before_bias",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 17,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/conv3/Conv_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 19,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_484",
+      "strides": [
+        512,
+        1,
+        1,
+        1
+      ],
+      "uid": 18,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/Add_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 20,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/0/Relu_1_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 21,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        128,
+        512,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_489",
+      "strides": [
+        512,
+        1,
+        1,
+        1
+      ],
+      "uid": 22,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/1/conv1/Conv_output_0::before_bias",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 23,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/1/conv1/Conv_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 25,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_490",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 24,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/1/relu/Relu_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 26,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        128,
+        128,
+        3,
+        3
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_492",
+      "strides": [
+        1152,
+        9,
+        3,
+        1
+      ],
+      "uid": 27,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/1/conv2/Conv_output_0::before_bias",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 28,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/1/conv2/Conv_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 30,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_493",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 29,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/1/Relu_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 31,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        512,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_495",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 32,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/1/conv3/Conv_output_0::before_bias",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 33,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/1/conv3/Conv_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 35,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_496",
+      "strides": [
+        512,
+        1,
+        1,
+        1
+      ],
+      "uid": 34,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/1/Add_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 36,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/1/Relu_1_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 37,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        128,
+        512,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_498",
+      "strides": [
+        512,
+        1,
+        1,
+        1
+      ],
+      "uid": 38,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/2/conv1/Conv_output_0::before_bias",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 39,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/2/conv1/Conv_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 41,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_499",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 40,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/2/relu/Relu_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 42,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        128,
+        128,
+        3,
+        3
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_501",
+      "strides": [
+        1152,
+        9,
+        3,
+        1
+      ],
+      "uid": 43,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/2/conv2/Conv_output_0::before_bias",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 44,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/2/conv2/Conv_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 46,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_502",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 45,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/2/Relu_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 47,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        512,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_504",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 48,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/2/conv3/Conv_output_0::before_bias",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 49,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/2/conv3/Conv_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 51,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_505",
+      "strides": [
+        512,
+        1,
+        1,
+        1
+      ],
+      "uid": 50,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/2/Add_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 52,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/2/Relu_1_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 53,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        128,
+        512,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_507",
+      "strides": [
+        512,
+        1,
+        1,
+        1
+      ],
+      "uid": 54,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/3/conv1/Conv_output_0::before_bias",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 55,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/3/conv1/Conv_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 57,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_508",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 56,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/3/relu/Relu_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 58,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        128,
+        128,
+        3,
+        3
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_510",
+      "strides": [
+        1152,
+        9,
+        3,
+        1
+      ],
+      "uid": 59,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/3/conv2/Conv_output_0::before_bias",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 60,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/3/conv2/Conv_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 62,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_511",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 61,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        128,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/3/Relu_output_0",
+      "strides": [
+        100352,
+        784,
+        28,
+        1
+      ],
+      "uid": 63,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        512,
+        128,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_513",
+      "strides": [
+        128,
+        1,
+        1,
+        1
+      ],
+      "uid": 64,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/3/conv3/Conv_output_0::before_bias",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 65,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/3/conv3/Conv_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 67,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        1,
+        1
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "onnx::Conv_514",
+      "strides": [
+        512,
+        1,
+        1,
+        1
+      ],
+      "uid": 66,
+      "virtual": false
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/3/Add_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 68,
+      "virtual": true
+    },
+    {
+      "alignment": 16,
+      "data_type": "float",
+      "dims": [
+        1,
+        512,
+        28,
+        28
+      ],
+      "is_runtime_pass_by_value": false,
+      "name": "/layer2/3/Relu_1_output_0",
+      "strides": [
+        401408,
+        784,
+        28,
+        1
+      ],
+      "uid": 69,
+      "virtual": false
+    }
+  ]
+}

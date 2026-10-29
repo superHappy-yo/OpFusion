@@ -1,0 +1,8 @@
+# 仅测试准备/独立参考；生产导入器和 compile.sh 不调用这些包。
+torch==2.5.1
+torchvision==0.20.1
+ultralytics==8.3.0
+onnx==1.20.0
+onnxruntime==1.23.2
+numpy==1.26.4
+opencv-python-headless==4.11.0.86
